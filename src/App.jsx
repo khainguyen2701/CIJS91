@@ -1,41 +1,42 @@
-import { useEffect, useState } from 'react';
-import Button from './component/Button';
-import Header from './component/Header';
-import ThemeProvider from './context/ThemeContext';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import Layout from './layout';
+import About from './page/About';
+import Contact from './page/Contact';
+import Home from './page/Home';
+import { Button } from '@mui/material';
+import Phone from './page/Phone';
+import Email from './page/Email';
+import Gender from './page/Gerder';
+import Error from './page/Error';
 
 function App() {
-  const [heading, setHeading] = useState('heading');
-  const [footer, setFooter] = useState('footer');
-
-  useEffect(() => {
-    console.log('Re-render');
-  }, [heading, footer]);
+  const defineRouter = [
+    { id: '1', path: '/', component: <Home /> },
+    { id: '2', path: '/contact', component: <Contact /> },
+    { id: '3', path: '/about', component: <About /> },
+  ];
 
   return (
-    <>
-      <ThemeProvider>
-        <>
-          <Button />
-          <Header />
-        </>
-      </ThemeProvider>
-      <button
-        onClick={() => {
-          setHeading(heading + '1');
-        }}
-      >
-        Button1
-      </button>
-      <button
-        onClick={() => {
-          setFooter(footer + '1');
-        }}
-      >
-        Button
-      </button>
-      <div> {heading}</div>
-      <div> {footer}</div>
-    </>
+    <Layout>
+      <Phone />
+      <>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} extract>
+            <Route path="phone" element={<Phone />} />
+            <Route path="email" element={<Email />} />
+            <Route path="gender" element={<Gender />} />
+          </Route>
+          <Route path="/about" element={<About />} />
+
+          <Route path="*" element={<Error />} />
+
+          {/* {defineRouter.map((route) => (
+          <Route key={route.id} element={route.component} path={route.path} />
+        ))} */}
+        </Routes>
+      </>
+    </Layout>
   );
 }
 

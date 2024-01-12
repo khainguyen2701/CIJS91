@@ -47,3 +47,11 @@ Cleanup function
     console.log(3)
 
     1 3 2
+
+
+
+    Router ( 1 là path 2 là cpn)
+
+    
+
+    <Router path="/about" component={ComponentD}> =>example.com/about => ComponentD
